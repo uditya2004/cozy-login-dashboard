@@ -1,0 +1,143 @@
+# Project Documentation
+
+## Project Overview
+This is a full-stack web application built with React, TypeScript, and Supabase, featuring user authentication and service management capabilities.
+
+## Tech Stack
+- Frontend: React with TypeScript
+- UI Components: shadcn/ui
+- Styling: Tailwind CSS
+- Backend/Database: Supabase
+- State Management: TanStack Query (React Query)
+- Routing: React Router
+
+## Core Features
+1. User Authentication
+2. Dashboard Interface
+3. Service Management
+
+## File Structure & Implementation Details
+
+### Authentication Implementation
+1. src/contexts/AuthContext.tsx
+   - Manages authentication state across the application
+   - Handles user session management using Supabase
+   - Provides login/logout functionality
+   - Exposes user context to child components
+
+2. src/pages/Auth.tsx
+   - Implements the authentication page
+   - Uses Supabase Auth UI for login/signup forms
+   - Handles redirect logic for authenticated users
+   - Integrates with AuthContext for session management
+
+### Page Components
+1. src/pages/Index.tsx
+   - Landing page implementation
+   - Features welcome message and call-to-action buttons
+   - Integrates with navigation system
+
+2. src/pages/Dashboard.tsx
+   - Protected route requiring authentication
+   - Displays user profile information
+   - Integrates with Supabase for data fetching
+   - Uses TanStack Query for data management
+
+### Core Components
+1. src/components/Navbar.tsx
+   - Main navigation component
+   - Responsive design
+   - Handles conditional rendering based on auth state
+   - Provides navigation links and logout functionality
+
+### Database Schema (Supabase)
+1. profiles Table
+   - Stores user profile information
+   - Columns:
+     * id (UUID, links to auth.users)
+     * full_name (text)
+     * email (text)
+     * created_at (timestamp)
+     * updated_at (timestamp)
+
+2. service Table
+   - Stores service-related information
+   - Columns:
+     * id (UUID)
+     * customer_name (text)
+     * customer_email (text)
+     * mechanic_name (text)
+     * mechanic_address (text)
+     * created_at (timestamp)
+
+### Security Implementation
+1. Row Level Security (RLS)
+   - Profiles table: Users can only access their own profile
+   - Service table: Authenticated users can insert and view records
+
+### Integration Files
+1. src/integrations/supabase/client.ts
+   - Supabase client configuration
+   - Handles database connection
+   - Exports configured client instance
+
+2. src/integrations/supabase/types.ts
+   - TypeScript type definitions for database schema
+   - Ensures type safety when working with database
+
+## Key Features & Their Implementation
+
+### Authentication Flow
+1. User arrives at the application
+2. If not authenticated, they can:
+   - Sign up with email/password
+   - Log in with existing credentials
+3. Upon successful authentication:
+   - User session is created
+   - Profile is created/updated in profiles table
+   - User is redirected to dashboard
+
+### Protected Routes
+- Implementation in App.tsx using React Router
+- AuthContext provides authentication state
+- Unauthorized users are redirected to login
+
+### Data Management
+- TanStack Query handles data fetching and caching
+- Supabase real-time subscriptions for live updates
+- Optimistic updates for better user experience
+
+## Development Guidelines
+
+### Adding New Features
+1. Create new components in src/components
+2. Update database schema if needed
+3. Implement RLS policies for new tables
+4. Update types in types.ts
+5. Add new routes in App.tsx if required
+
+### Best Practices
+1. Use TypeScript for type safety
+2. Implement proper error handling
+3. Follow existing component structure
+4. Use Tailwind CSS for styling
+5. Leverage shadcn/ui components
+6. Implement responsive design
+
+### Authentication Considerations
+1. Always use Supabase auth hooks
+2. Implement proper route protection
+3. Handle session expiration
+4. Manage user roles if needed
+
+## Deployment Considerations
+1. Set up proper environment variables
+2. Configure Supabase project settings
+3. Set up proper redirect URLs
+4. Enable/disable email confirmation as needed
+
+## Maintenance
+1. Regular dependency updates
+2. Monitor Supabase usage
+3. Review security policies
+4. Update documentation for new features
